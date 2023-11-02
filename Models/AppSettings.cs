@@ -15,7 +15,7 @@ namespace MotdEditor.Models
         [JsonIgnore]
         private string ConfigFilePath;
         public string motd = "";
-
+        //TODO 保存MOTD，下次打开直接能修改上次的
         public AppSettings()
         {
             ConfigFilePath = Path.Combine(Environment.CurrentDirectory, "config.json");
