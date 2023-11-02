@@ -3,12 +3,185 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:local="clr-namespace:MotdEditor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="Motd Editor"
     Width="800"
     Height="450"
+    d:DataContext="{d:DesignInstance local:MainWindow}"
     mc:Ignorable="d">
-    <Grid />
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="48" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="1">
+            <StackPanel
+                Margin="64,16"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center">
+                <Border
+                    Height="80"
+                    Background="#000000"
+                    BorderBrush="#555555"
+                    BorderThickness="2"
+                    CornerRadius="5">
+                    <DockPanel>
+                        <TextBlock
+                            x:Name="ui_motd"
+                            Margin="8"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            TextWrapping="Wrap" />
+                    </DockPanel>
+                </Border>
+                <Border
+                    Margin="16"
+                    Padding="8"
+                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="2"
+                    CornerRadius="4">
+                    <StackPanel TextElement.FontSize="18">
+                        <DockPanel>
+                            <TextBlock
+                                Margin="0,4"
+                                FontSize="22"
+                                FontWeight="DemiBold"
+                                Text="编辑" />
+                            <Label
+                                Margin="4,0,0,0"
+                                VerticalAlignment="Bottom"
+                                Content="使用 &amp; 来代替 § " />
+                        </DockPanel>
+                        <DockPanel Margin="0,4">
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="第一行" />
+                            <ui:TextBox
+                                x:Name="ui_line1"
+                                Margin="6,0,0,0"
+                                Text="Chroma Endless 1.1.0 色度无尽"
+                                TextChanged="Iuput1_TextChanged" />
+                        </DockPanel>
+                        <DockPanel Margin="0,4">
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="第二行" />
+                            <ui:TextBox
+                                x:Name="ui_line2"
+                                Margin="6,0,0,0"
+                                Text="Travel Around Server 环球旅行 将在 5 天后更换周目"
+                                TextChanged="Iuput2_TextChanged" />
+                        </DockPanel>
+                        <DockPanel Margin="0,4">
+                            <TextBlock
+                                x:Name="ui_output"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="复制到Properties" />
+                            <ui:TextBox Margin="6,0,0,0" />
+                        </DockPanel>
+                        <ui:CardExpander
+                            Padding="8"
+                            Header="格式字符"
+                            ScrollViewer.CanContentScroll="False"
+                            TextElement.FontSize="16">
+                            <ui:CardExpander.Resources>
+                                <Style x:Key="Header" TargetType="TextBlock">
+                                    <Setter Property="Margin" Value="4" />
+                                    <Setter Property="MinWidth" Value="60" />
+                                </Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Margin" Value="4" />
+                                </Style>
+                            </ui:CardExpander.Resources>
+                            <StackPanel>
+                                <TextBlock
+                                    FontSize="22"
+                                    FontWeight="DemiBold"
+                                    Text="Color codes" />
+                                <ItemsControl ItemsSource="{Binding ViewModel.ColorsMC}" ScrollViewer.CanContentScroll="False">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border
+                                                Width="42"
+                                                Height="42"
+                                                Margin="4"
+                                                Background="{Binding ColorMC}"
+                                                BorderBrush="#1000"
+                                                BorderThickness="2"
+                                                CornerRadius="4">
+                                                <Border
+                                                    Margin="0"
+                                                    Background="#0000"
+                                                    CornerRadius="3">
+                                                    <i:Interaction.Triggers>
+                                                        <i:EventTrigger EventName="MouseEnter">
+                                                            <i:ChangePropertyAction PropertyName="Background" Value="#9FFF" />
+                                                        </i:EventTrigger>
+                                                        <i:EventTrigger EventName="MouseLeave">
+                                                            <i:ChangePropertyAction PropertyName="Background" Value="#0000" />
+                                                        </i:EventTrigger>
+                                                    </i:Interaction.Triggers>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        FontWeight="Black"
+                                                        Foreground="#333"
+                                                        Text="{Binding Code}" />
+                                                </Border>
+
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </ItemsControl>
+                                <TextBlock
+                                    FontSize="22"
+                                    FontWeight="DemiBold"
+                                    Text="Formatting codes" />
+                                <DockPanel>
+                                    <TextBlock Style="{StaticResource Header}" Text="§k" />
+                                    <TextBlock Text="混乱显示 obfuscated" />
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Style="{StaticResource Header}" Text="§l" />
+                                    <TextBlock FontWeight="Bold" Text="加粗 Bold" />
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Style="{StaticResource Header}" Text="§m" />
+                                    <TextBlock Text="删除线 strikethrough" TextDecorations="Strikethrough" />
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Style="{StaticResource Header}" Text="§n" />
+                                    <TextBlock Text="下划线 underline" TextDecorations="Underline" />
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Style="{StaticResource Header}" Text="§o" />
+                                    <TextBlock FontStyle="Italic" Text="斜体 italic" />
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Style="{StaticResource Header}" Text="§r" />
+                                    <TextBlock Text="重置 reset" />
+                                </DockPanel>
+                            </StackPanel>
+                        </ui:CardExpander>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+        <ui:TitleBar Title="Motd Editor" Grid.Row="0" />
+    </Grid>
 </ui:FluentWindow>

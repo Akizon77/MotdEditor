@@ -11,15 +11,15 @@ namespace MotdEditor.Services
 {
     internal class ApplicationHostService : IHostedService
     {
-        public readonly IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
         public ApplicationHostService(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
         }
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-            var mainwindow = _serviceProvider.GetRequiredService<MainWindow>();
+            await Task.CompletedTask;//返回一个Task 表示任务完成
+            var mainwindow = _serviceProvider.GetRequiredService<MainWindow>();//从服务获取MainWindow
             mainwindow.Show();
         }
 

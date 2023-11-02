@@ -6,6 +6,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MotdEditor.Models;
 using MotdEditor.MVVM;
 using MotdEditor.Services;
 using System.IO;
@@ -36,6 +37,7 @@ namespace MotdEditor
                     services.AddHostedService<ApplicationHostService>();
                     services.AddSingleton<MainWindow>();
                     services.AddSingleton<MainWindowViewModel>();
+                    services.AddSingleton<AppSettings>();
                 }
             )
             .Build();
