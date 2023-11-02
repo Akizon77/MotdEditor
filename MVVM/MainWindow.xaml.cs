@@ -48,8 +48,6 @@ namespace MotdEditor
         {
             if (ui_line1 is null || ui_line2 is null)
                 return;
-            if (String.IsNullOrEmpty(ui_line1.Text) || String.IsNullOrEmpty(ui_line2.Text))
-                return;
             ui_motd.Inlines.Clear();
             AddOneLine(ui_line1.Text.ReplaceChar());
             ui_motd.Inlines.Add(new LineBreak());
