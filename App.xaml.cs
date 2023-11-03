@@ -29,7 +29,7 @@ namespace MotdEditor
         private static readonly IHost _host = Host.CreateDefaultBuilder()
             .ConfigureAppConfiguration(c =>
             {
-                c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location));
+                //c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location));
             })
             .ConfigureServices(
                 (context, services) =>
