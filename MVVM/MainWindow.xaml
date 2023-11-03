@@ -14,6 +14,9 @@
     mc:Ignorable="d">
 
     <Grid>
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="Loaded" />
+        </i:Interaction.Triggers>
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition />
@@ -66,7 +69,7 @@
                             <ui:TextBox
                                 x:Name="ui_line1"
                                 Margin="6,0,0,0"
-                                Text="Chroma Endless 1.1.0 色度无尽"
+                                Text="{Binding ViewModel.Motd1, Mode=TwoWay}"
                                 TextChanged="Iuput1_TextChanged" />
                         </DockPanel>
                         <DockPanel Margin="0,4">
@@ -77,20 +80,23 @@
                             <ui:TextBox
                                 x:Name="ui_line2"
                                 Margin="6,0,0,0"
-                                Text="Travel Around Server 环球旅行 将在 5 天后更换周目"
+                                Text="{Binding ViewModel.Motd2, Mode=TwoWay}"
                                 TextChanged="Iuput2_TextChanged" />
                         </DockPanel>
                         <DockPanel Margin="0,4">
                             <TextBlock
-                                x:Name="ui_output"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="复制到Properties" />
-                            <ui:TextBox Margin="6,0,0,0" />
+                            <ui:TextBox
+                                x:Name="ui_output"
+                                Margin="6,0,0,0"
+                                Text="{Binding ViewModel.Output, Mode=TwoWay}"
+                                TextChanged="ui_output_TextChanged" />
                         </DockPanel>
                         <ui:CardExpander
                             Padding="8"
-                            Header="格式字符"
+                            Header="格式字符 - 你必须在添加颜色之后进行格式化"
                             ScrollViewer.CanContentScroll="False"
                             TextElement.FontSize="16">
                             <ui:CardExpander.Resources>

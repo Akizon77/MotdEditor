@@ -14,7 +14,8 @@ namespace MotdEditor.Models
     {
         [JsonIgnore]
         private string ConfigFilePath;
-        public string motd = "";
+        public string motd1 = "";
+        public string motd2 = "";
         //TODO 保存MOTD，下次打开直接能修改上次的
         public AppSettings()
         {
@@ -25,7 +26,8 @@ namespace MotdEditor.Models
         private void ReadFormText()
         {
             var json = JObject.Parse(ReadConfigJson());
-            motd = json["motd"].ToString();
+            motd1 = json["motd1"].ToString();
+            motd2 = json["motd2"].ToString();
         }
 
         public void Save() 

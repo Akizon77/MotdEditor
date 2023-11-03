@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Microsoft.Extensions.DependencyInjection;
 using MotdEditor.Models;
 using System;
@@ -16,19 +17,20 @@ namespace MotdEditor.MVVM
         AppSettings Settings;
 
         [ObservableProperty]
-        ObservableCollection<Colors> colorsMC = new();
+        string motd1;
 
         [ObservableProperty]
-        string line1 = "Chroma Endless 1.1.0 色度无尽";
-        [ObservableProperty]
-        string line2 = "Travel Around Server 环球旅行 将在 5 天后更换周目";
+        string motd2;
         [ObservableProperty]
         string output;
+
+        [ObservableProperty]
+        ObservableCollection<Colors> colorsMC = new();
 
         public MainWindowViewModel(AppSettings appSettings)
         {
             Settings = appSettings;
-            "0123456789abcdefghijmnpqstu"
+            "0123456789abcdef"
                 .ToList<char>()
                 .ForEach(c =>
                 {
@@ -36,7 +38,11 @@ namespace MotdEditor.MVVM
                 });
         }
 
-        
-
+        [RelayCommand]
+        void OnLoad() 
+        {
+            Motd1 = Settings.motd1 ?? string.Empty;
+            Motd2 = Settings.motd2 ?? string.Empty;
+        }
     }
 }
