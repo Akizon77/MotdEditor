@@ -39,10 +39,17 @@ namespace MotdEditor.MVVM
         }
 
         [RelayCommand]
-        void OnLoad() 
+        void OnLoad()
         {
-            Motd1 = Settings.motd1 ?? string.Empty;
-            Motd2 = Settings.motd2 ?? string.Empty;
+            Motd1 = Settings.motd1;
+            Motd2 = Settings.motd2;
+        }
+        [RelayCommand]
+        void OnSave()
+        {
+            Settings.motd1 = Motd1;
+            Settings.motd2 = Motd2;
+            Settings.Save();
         }
     }
 }

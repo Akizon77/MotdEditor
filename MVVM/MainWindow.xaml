@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
     xmlns:local="clr-namespace:MotdEditor"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
@@ -15,13 +16,15 @@
 
     <Grid>
         <i:Interaction.Triggers>
-            <i:EventTrigger EventName="Loaded" />
+            <i:EventTrigger EventName="Loaded">
+                <i:InvokeCommandAction Command="{Binding ViewModel.LoadCommand}" />
+            </i:EventTrigger>
         </i:Interaction.Triggers>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1" Focusable="False">
             <StackPanel
                 Margin="64,16"
                 HorizontalAlignment="Stretch"
@@ -51,15 +54,23 @@
                     CornerRadius="4">
                     <StackPanel TextElement.FontSize="18">
                         <DockPanel>
-                            <TextBlock
-                                Margin="0,4"
-                                FontSize="22"
-                                FontWeight="DemiBold"
-                                Text="编辑" />
-                            <Label
-                                Margin="4,0,0,0"
-                                VerticalAlignment="Bottom"
-                                Content="使用 &amp; 来代替 § " />
+                            <DockPanel>
+                                <TextBlock
+                                    Margin="0,4"
+                                    FontSize="22"
+                                    FontWeight="DemiBold"
+                                    Text="编辑" />
+                                <Label
+                                    Margin="4,0,0,0"
+                                    VerticalAlignment="Bottom"
+                                    Content="使用 &amp; 来代替 § " />
+                            </DockPanel>
+                            <ui:Button
+                                HorizontalAlignment="Right"
+                                Appearance="Primary"
+                                Command="{Binding ViewModel.SaveCommand}">
+                                <ui:SymbolIcon Symbol="Save24" />
+                            </ui:Button>
                         </DockPanel>
                         <DockPanel Margin="0,4">
                             <TextBlock
@@ -69,8 +80,15 @@
                             <ui:TextBox
                                 x:Name="ui_line1"
                                 Margin="6,0,0,0"
+                                ClearButtonEnabled="False"
                                 Text="{Binding ViewModel.Motd1, Mode=TwoWay}"
-                                TextChanged="Iuput1_TextChanged" />
+                                TextChanged="Iuput1_TextChanged">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="KeyDown">
+                                        <i:InvokeCommandAction Command="{Binding ViewModel.SaveCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ui:TextBox>
                         </DockPanel>
                         <DockPanel Margin="0,4">
                             <TextBlock
@@ -80,8 +98,15 @@
                             <ui:TextBox
                                 x:Name="ui_line2"
                                 Margin="6,0,0,0"
+                                ClearButtonEnabled="False"
                                 Text="{Binding ViewModel.Motd2, Mode=TwoWay}"
-                                TextChanged="Iuput2_TextChanged" />
+                                TextChanged="Iuput2_TextChanged">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="KeyDown">
+                                        <i:InvokeCommandAction Command="{Binding ViewModel.SaveCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ui:TextBox>
                         </DockPanel>
                         <DockPanel Margin="0,4">
                             <TextBlock
@@ -91,11 +116,18 @@
                             <ui:TextBox
                                 x:Name="ui_output"
                                 Margin="6,0,0,0"
-                                Text="{Binding ViewModel.Output, Mode=TwoWay}"
-                                TextChanged="ui_output_TextChanged" />
+                                ClearButtonEnabled="False"
+                                Text="{Binding ViewModel.Output, Mode=TwoWay}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding ViewModel.SaveCommand}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </ui:TextBox>
                         </DockPanel>
                         <ui:CardExpander
                             Padding="8"
+                            Focusable="False"
                             Header="格式字符 - 你必须在添加颜色之后进行格式化"
                             ScrollViewer.CanContentScroll="False"
                             TextElement.FontSize="16">
@@ -113,7 +145,10 @@
                                     FontSize="22"
                                     FontWeight="DemiBold"
                                     Text="Color codes" />
-                                <ItemsControl ItemsSource="{Binding ViewModel.ColorsMC}" ScrollViewer.CanContentScroll="False">
+                                <ItemsControl
+                                    Focusable="False"
+                                    ItemsSource="{Binding ViewModel.ColorsMC}"
+                                    ScrollViewer.CanContentScroll="False">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Border
@@ -186,8 +221,34 @@
                         </ui:CardExpander>
                     </StackPanel>
                 </Border>
+                <DockPanel>
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap">
+                        <Run Text="Motd 编辑器" />
+                        <Run Text="&#169;2023 阿卡西 Akz" />
+                    </TextBlock>
+                    <DockPanel HorizontalAlignment="Right">
+                        <ui:Hyperlink
+                            HorizontalAlignment="Center"
+                            Focusable="False"
+                            NavigateUri="https://github.com/Akizon77/MotdEditor">
+                            <icon:FontAwesome Kind="GithubBrands" />
+                        </ui:Hyperlink>
+                        <ui:Hyperlink Focusable="False" NavigateUri="https://akz.moe/archives/1698984148605">
+                            <ui:SymbolIcon
+                                VerticalAlignment="Bottom"
+                                FontSize="18"
+                                Symbol="Open16" />
+                        </ui:Hyperlink>
+                    </DockPanel>
+                </DockPanel>
+
+
+
             </StackPanel>
         </ScrollViewer>
-        <ui:TitleBar Title="Motd Editor" Grid.Row="0" />
+        <ui:TitleBar
+            Title="Motd Editor"
+            Grid.Row="0"
+            Height="32" />
     </Grid>
 </ui:FluentWindow>

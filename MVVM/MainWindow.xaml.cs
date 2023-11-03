@@ -54,14 +54,9 @@ namespace MotdEditor
             AddOneLine(ui_line1.Text.ReplaceChar());
             ui_motd.Inlines.Add(new LineBreak());
             AddOneLine(ui_line2.Text.ReplaceChar());
-
-            Settings.motd1 = ViewModel.Motd1;
-            Settings.motd2 = ViewModel.Motd2;
             ViewModel.Output = ui_line1.Text.ReplaceChar().ConvertUnicode()
                 + "\\n"
                 + ui_line2.Text.ReplaceChar().ConvertUnicode();
-            Settings.Save();
-            
         }
 
         void AddOneLine(string rawstr)
@@ -163,9 +158,6 @@ namespace MotdEditor
             }
         }
 
-        private void ui_output_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
     }
 
     static class Extensions
