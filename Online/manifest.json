@@ -1,0 +1,21 @@
+{
+    "name": "Motd在线编辑器",
+    "short_name": "MotdEditor",
+    "description": "Minecraft Motd 在线编辑器",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#fcfcfc",
+    "theme_color": "#fcfcfc",
+    "orientation": "portrait-primary",
+    "icons": [
+      {
+        "src": "/minecraft.png",
+        "type": "image/png", "sizes": "128x128"
+      },
+      {
+        "src": "/icons/512.png",
+        "type": "image/png", "sizes": "512x512"
+      }
+    ]
+  }
+  

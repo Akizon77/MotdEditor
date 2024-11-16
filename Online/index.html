@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fcfcfc" />
+    <script src="./serviceWorker.js"></script>
+    <script src="./script.js"></script>
+
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="shortcut icon" href="./minecraft.png" type="image/x-icon">
+    <title>Motd Editor Online</title>
+</head>
+
+<body>
+    <div class="main-container">
+        <div class="preview">
+            <div class="preview-text">
+
+            </div>
+        </div>
+
+        <div class="operating">
+            <div class="operating-head">
+                <span>编辑</span>
+                <label>使用 &amp; 来代替 §</label>
+            </div>
+
+            <div class="operating-input">
+                <span>第一行</span>
+                <input type="text" id="motd-line-1" oninput="onInput()">
+            </div>
+            <div class="operating-input">
+                <span>第二行</span>
+                <input type="text" id="motd-line-2" oninput="onInput()">
+            </div>
+
+            <div class="operating-head">
+                <span>原版输出</span>
+                <label>复制到Properties</label>
+                <p class="notice-copy-success">成功复制到剪切板</p>
+                <button class="btn-copy" onclick="copyToClipboard()">
+                    <i class="fa fa-copy"></i>
+                </button>
+            </div>
+            <p class="output">Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores veniam quos iste
+                reiciendis earum obcaecati sapiente tenetur, quae voluptate minus?</p>
+            <details>
+                <summary>格式字符 - 你必须在添加颜色之后进行格式化</summary>
+                <div class="details-root">
+                    <div id="details-root-button-panel">
+                        <p>Color Codes</p>
+                    </div>
+                    <div id="details-root-fmt-panel">
+                        <p>Formatting Codes</p>
+                    </div>
+                </div>
+            </details>
+        </div>
+        <div class="footer">
+            <p>Motd Editor Online &copy;2024 阿卡西 Akz </p>
+            <a href="https://github.com/Akizon77/MotdEditor" target="_blank"><i class="fa fa-github"></i></a>
+            <!-- <a class="about" href="/about.html" target="_blank">关于</a>-->
+        </div>
+    </div>
+</body>
+
+</html>
