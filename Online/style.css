@@ -170,6 +170,8 @@ details{
     border-radius: 4px;
     border-color: #ebebeb;
     background-color: #fdfdfd;
+    flex-direction: column;
+
 }
 
 summary {
