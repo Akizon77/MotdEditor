@@ -1,23 +1,26 @@
 async function copyToClipboard() {
     const outputText = document.querySelector('.output').innerText;
-    const p = document.querySelector('.notice-copy-success');
+    const dialog = document.getElementById('dialog-copy');
+    const dialog_title = document.getElementById('dialog-copy-title');
+    const dialog_content = document.getElementById('dialog-copy-content');
+    const dialog_btn = document.getElementById('dialog-copy-btn');
     try {
         await navigator.clipboard.writeText(outputText);
-        p.setAttribute('style', 'opacity: 100');
-        setTimeout(() => {
-            p.setAttribute('style', 'opacity: 0');
-        }, 1000);
+        dialog_title.innerText = "成功";
+        dialog_content.innerText = "已复制到剪贴板";
+        dialog_btn.className = "app-btn app-btn-success"
+        dialog.className = 'app-alert show';
     } catch (err) {
+        dialog_title.innerText = "错误";
+        dialog_content.innerText = "复制失败: " + err;
+        dialog_btn.className = "app-btn app-btn-outline-danger"
+        dialog.className = 'app-alert show';
         console.log(err);
-        p.innerText = '复制失败';
-        p.setAttribute('style', 'opacity: 100');
-        setTimeout(() => {
-            p.setAttribute('style', 'opacity: 0');
-            setTimeout(() => {
-                p.innerText = '成功复制到剪切板';
-            }, 300);
-        }, 1000);
     }
+}
+async function close_dialog() {
+    const dialog = document.getElementById('dialog-copy');
+    dialog.className = 'app-alert';
 }
 
 window.onload = function () {
@@ -30,7 +33,20 @@ window.onload = function () {
     setOutput();
     setButtonpanel();
 };
-
+async function switch_theme(){
+    document.body.style.transition = "150ms";
+    let current = Appearance.getColorScheme(); 
+    switch (current) {
+        case 'dark':
+            Appearance.setLightScheme();
+            break;
+        case 'light':
+            Appearance.setDarkScheme();
+            break;
+        default:
+            break;
+    }
+}
 function setButtonpanel() {
     const panel = document.getElementById('details-root-button-panel');
     const fmtpanel = document.getElementById('details-root-fmt-panel');
@@ -67,7 +83,7 @@ function setButtonpanel() {
         }
     }
 
-    
+
     const formatMap = {
         'k': 'font-weight:normal;',
         'l': 'font-weight:bold;',
@@ -84,13 +100,11 @@ function setButtonpanel() {
         'o': '斜体 Italic',
         'r': '重置 Reset'
     };
-
     for (let key in formatMap) {
         if (formatMap.hasOwnProperty(key)) {
             fmtpanel.innerHTML += `<div style=\"display: flex;flex-direction: row;\"><span class=\"fmt-code-title\">§${key}</span><span class=\"fmt-code-value\" style="${formatMap[key]}">${formatDescMap[key]}</span></div>`;
         }
     }
-
 }
 function onInput() {
     saveToLocalStorage();
